@@ -18,23 +18,23 @@ const productSchema = new mongoose.Schema({
         required : true
     },
     category :{
-        typeof : String,
+        type : String,
         required : true
     },
     subCategory :{
-        typeof : String,
+        type : String,
         required : true
     },
     sizes :{
-        typeof : Array,
+        type : Array,
         required : true
     },
-    bestseller :{
-        typeof : Boolean,
+    bestSeller :{
+        type : Boolean,
         required : true
     },
     date :{
-        typeof : Number,
+        type : Number,
         required : true
     }
    

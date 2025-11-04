@@ -1,19 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Title from './Title'
-import { setLatestCollection , setCartPrice } from '../redux/productSlice'
+import {  setCartPrice } from '../redux/productSlice'
 import ProductItem from './ProductItem'
+import axios from 'axios'
+import { backendUrl } from '../config'
 
 const LatestCollection = () => {
 
-    const {products , latestCollection} = useSelector((state)=>state.products);
+
+    const [products , setProducts] = useState([]);
+
+    useEffect(()=>{
+        const getLatestCollection = async ()=>{
+            try {
+                const response = await axios.get(backendUrl + '/api/product/list')
+                if(response.data.success){
+                    const first10 = response.data.products
+                    setProducts(first10.reverse().slice(0,10))
+                }else{
+                    console.log(response.data.message || 'Failed to fetch products');
+                    
+                }
+            } catch (error) {
+                console.log(error.message);
+                
+            }
+        }
+
+
+        getLatestCollection();
+    },[]);
+
+    /* const {products , latestCollection} = useSelector((state)=>state.products);
     const dispatch = useDispatch();
     
 
     useEffect(()=>{
         dispatch(setLatestCollection([0,10]))
     },[])
-    
+     */
     
   return (
     <div className='my-10'>
@@ -25,7 +51,7 @@ const LatestCollection = () => {
         {/* Rendering products */}
             <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
                 {
-                    latestCollection.map((product , index)=>{
+                    products.map((product , index)=>{
                         return(
                         <ProductItem key={index} id={product._id} image={product.image} name={product.name} price={product.price} ></ProductItem>
                         )

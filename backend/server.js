@@ -3,6 +3,10 @@ import cors from 'cors'
 import 'dotenv/config'
 import connectDB from './config/mongoDB.js'
 import connectCloudinary from './config/cloudinary.js'
+import userRouter from './routes/userRoute.js'
+import productRouter from './routes/productRoute.js'
+import cartRouter from './models/cartRoute.js'
+import orderRouter from './routes/orderRoute.js'
 
 /* App Config */
 
@@ -18,9 +22,15 @@ app.use(cors())
 
 /* API EndPoints */    
 
+app.use('/api/user' , userRouter)
+app.use('/api/product' , productRouter)
+app.use('/api/cart' , cartRouter)
+app.use('/api/orders' , orderRouter)
+
 app.get('/' , (req , res)=>{
     res.send('API Working')
 })
+
  //Start the express server
 
  app.listen(port , ()=> console.log('Server Running on ' + port)

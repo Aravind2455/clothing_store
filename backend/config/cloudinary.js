@@ -1,4 +1,4 @@
-import {V2 as cloudinary} from "cloudinary" 
+import {v2 as cloudinary} from "cloudinary" 
 
 const connectCloudinary = ()=>{
     cloudinary.config({

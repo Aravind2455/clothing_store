@@ -3,11 +3,38 @@ import { useSelector , useDispatch } from 'react-redux'
 import { setCartPrice } from '../redux/productSlice'
 import Title from './Title'
 import { current } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { backendUrl } from '../config'
+import { toast } from 'react-toastify'
 
 
 const CartTotal = () => {
 
-    const{cartItems} = useSelector((state)=>state.products)
+     const{token} = useSelector((state)=>state.products) 
+
+
+    const [cartItems , setCartItems] = useState([]);
+
+    useEffect(()=>{
+       const fetchUserCart  = async()=>{
+         try {
+            const response = await axios.post(backendUrl + '/api/cart/get' , {} , {headers : {token}})
+            if(response.data.success){
+                setCartItems(response.data.cartData);
+                
+            }
+            else{
+                toast.error(response.data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+       }
+
+       fetchUserCart();
+    } , [cartItems
+
+    ] )
 
     const {cartPrice , currency ,deliveryFee} = useSelector((state)=>state.products)
 
