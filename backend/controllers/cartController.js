@@ -1,6 +1,5 @@
 import { response } from "express"
 import userModel from "../models/userModel.js"
-import { data } from "react-router-dom"
 
 const addToCart = async (req, res) => {
     try {

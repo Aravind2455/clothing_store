@@ -1,5 +1,4 @@
 import {v2 as cloudinary} from 'cloudinary'
-import { data } from 'react-router-dom';
 import productModel from '../models/productModel.js'
 
 //Function for add product
