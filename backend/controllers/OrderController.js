@@ -35,14 +35,14 @@ const placeOrder = async (req, res) => {
 
         await userModel.findByIdAndUpdate(userId, { cartData: [] });
 
-        res.json({
+        return res.json({
             success: true,
             message: "Order Placed",
             newOrder
         })
 
     } catch (error) {
-        res.json({
+        return res.json({
             success: false,
             message: error.message
         })
@@ -105,7 +105,7 @@ const placeOrderStripe = async (req, res) => {
             mode: 'payment'
         })
 
-        res.json({
+        return res.json({
             success: true,
             session_url: session.url
         })
@@ -139,7 +139,7 @@ const verifyStripe = async (req, res) => {
             })
         }
     } catch (error) {
-        res.json({
+        return res.json({
             success: false,
             message: error.message
         })
@@ -211,7 +211,7 @@ const verifyRazorPay = async (req, res) => {
         if (orderInfo.status === 'paid') {
             await orderModel.findByIdAndUpdate(orderInfo.receipt, { payment: true })
             await userModel.findByIdAndUpdate(userId, { cartData: [] })
-            res.json({
+            return res.json({
                 success: true,
                 message: "payment successful"
             })
@@ -219,7 +219,7 @@ const verifyRazorPay = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.json({
+        return res.json({
             success: false,
             message: error.message
         })
@@ -233,13 +233,13 @@ const allOrders = async (req, res) => {
     try {
 
         const orders = await orderModel.find({})
-        res.json({
+        return res.json({
             success: true,
             orders
         })
 
     } catch (error) {
-        res.json({
+        return res.json({
             success: false,
             message: error.message
         })
@@ -251,7 +251,7 @@ const userOrders = async (req, res) => {
     try {
         const { userId } = req.body;
         const orders = await orderModel.find({ userId })
-        res.json({
+        return res.json({
             success: true,
             orders
         })
@@ -259,7 +259,7 @@ const userOrders = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        res.json({
+        return res.json({
             success: false,
             message: "Couldn't fetch the orders , Try again !"
         })
@@ -274,13 +274,13 @@ const updateStatus = async (req, res) => {
 
         await orderModel.findByIdAndUpdate(orderId, { status })
 
-        res.json({
+        return res.json({
             success: true,
             message: "Status updated"
         })
 
     } catch (error) {
-        res.json({
+        return res.json({
             success: false,
             message: error.message
         })

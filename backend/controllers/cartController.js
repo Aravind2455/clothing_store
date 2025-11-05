@@ -123,7 +123,7 @@ const deleteProductFronCart = async(req , res ) => {
         user.cartData = deletedArray;
         await user.save();
 
-        res.json({
+        return res.json({
             success : true,
             message : 'Product deleted from the cart successfully !',
             cartData
@@ -131,7 +131,7 @@ const deleteProductFronCart = async(req , res ) => {
         
         
     } catch (error) {
-        res.json({
+       return res.json({
             success : false,
             message : error.message
         })
@@ -148,14 +148,14 @@ const clearCart = async (req , res) => {
 
         await user.save();
 
-        res.json({
+       return res.json({
             success : true,
             message : "Cleared Cart successfully !"
         })
 
 
     } catch (error) {
-        res.json({
+        return res.json({
             success : false ,
             message : error.message
         })

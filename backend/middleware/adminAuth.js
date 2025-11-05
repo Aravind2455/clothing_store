@@ -29,7 +29,7 @@ try {
     next();
 } 
 catch (error) {
-    res.json({
+   return res.json({
         success : false ,
         message : error.message
     })
